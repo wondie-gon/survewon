@@ -180,6 +180,95 @@ WonFormAction.prototype.dataToJson = function() {
     return JSON.stringify( dataObj, null, " " );
 };
 
+// ---------------------Validation methods-----------------------------
+/**
+ * Validating checkboxes to make sure that atleast one checkbox is checked
+ * 
+ * Since HTML5 does not support 'required' attribute for checkboxes, this 
+ * method adds 'required' is added on all, and validates atleast one is checked
+ * 
+ * @returns {boolean} True if atleast one is checked, and removes 'required' on all
+ */
+ WonFormAction.prototype.checkBoxRequired = function() {
+    // get field names
+    let fieldNames = this.getAllFieldNames();
+    let thisForm = this;
+
+    // atleast one checked
+    let atLeastOneChecked = false;
+
+    // get checkboxes group
+    let checkBoxGrp = fieldNames.filter( function( fldName ) {
+        let elem = thisForm.getFieldByName( fldName );
+        if ( thisForm.isFieldCheckBox( fldName ) && elem.name === fldName ) {
+            return elem;
+        }
+    } );
+
+    // loop through a checkbox group
+    for ( let i = 0; i < checkBoxGrp.length; i++ ) {
+        if ( checkBoxGrp[i].checked === true ) {
+            atLeastOneChecked = true;
+        }
+    }
+
+    // required attribute
+    if ( atLeastOneChecked === true ) {
+        for ( let i = 0; i < checkBoxGrp.length; i++ ) {
+            checkBoxGrp[i].required = false;  
+        }
+    } else {
+        for ( let i = 0; i < checkBoxGrp.length; i++ ) {
+            checkBoxGrp[i].required = true;  
+        }
+    }
+};
+
+WonFormAction.prototype.validateCheckBox = function() {
+    // get field names
+    let fieldNames = this.getAllFieldNames();
+    let thisForm = this;
+
+    // set 'required' checkboxes
+    let checkBoxes = fieldNames.filter( function( fldName ) {
+        let elem = thisForm.getFieldByName( fldName );
+        if ( thisForm.isFieldCheckBox( fldName ) ) {
+            return elem;
+        }
+    } );
+
+    return [...checkBoxes].some( function( el ) {
+        return el.checked;
+    } );
+};
+
+// TODO
+WonFormAction.prototype.validateCheckBoxGrp = function() {
+    let cbGroups = this.getCheckBoxGrp();
+    let thisForm = this;
+    cbGroups.forEach( function( el ) {
+        el.addEventListener( "click", thisForm.validateCheckBox() );
+    } );
+}
+
+/**
+ * sets 'required' attribute to checkboxes
+ */
+WonFormAction.prototype.getCheckBoxGrp = function() {
+    // get field names
+    let fieldNames = this.getAllFieldNames();
+    let thisForm = this;
+
+    let checkBoxGrp = fieldNames.filter( function( fldName ) {
+        let elem = thisForm.getFieldByName( fldName );
+        if ( thisForm.isFieldCheckBox( fldName ) && fldName === elem.name ) {
+            return elem;
+        }
+    } );
+
+    return checkBoxGrp;
+};
+
 // exporting module
 export { WonFormAction };
 

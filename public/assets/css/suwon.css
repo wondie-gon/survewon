@@ -201,6 +201,18 @@ select{
     left:6px;
     font-size:10px;
 }
+
+/* message block */
+.msg-block {
+    display: none;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    background-color: rgba(0,0,0,0.1);
+    color: rgb(238, 159, 14);
+}
+.msg-block.active {
+    display: block;
+}
 .buttons button{
     height:40px;
     width:100px;

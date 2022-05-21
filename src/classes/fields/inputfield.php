@@ -62,6 +62,7 @@ class InputField extends SUWONForm
 				'step' => '',
 				'pattern' => '',
 				'title' => '',
+				'required' => '',
 				'src' => '',
 				'alt' => '',
 				'img_size' => array(),

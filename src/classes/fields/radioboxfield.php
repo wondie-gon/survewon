@@ -47,7 +47,7 @@ class RadioBoxField extends SUWONForm
             // start wrapper
             $html .= parent::get_html_block_start( array( 
                         'id'      			=> $options['name'] . '_radios',
-                        'class'      		=> 'mb-3'
+                        'class'      		=> 'mb-3 radiobox-grp'
                     ) );
             
             // outputing title
@@ -136,6 +136,7 @@ class RadioBoxField extends SUWONForm
                 'name'              => '',
                 'value'             => '',
                 'class_list'        => 'form-check-input',
+                'required'          => false,
                 'label_args'         => array(
                     'for'   =>  '',
                     'text'  =>  'Label text'
@@ -175,18 +176,18 @@ class RadioBoxField extends SUWONForm
             $html_out .= ' ' . parent::get_onblur( $args['onblur'] );
         }
 
-        // required attributes if required is set true
-        if ( $args['required'] === true ) {
-            $html_out .= parent::get_aria_required( $args['required'] );
-
-            $html_out .= parent::get_required_attribute( $args['required'] );
-        }
-
         // if data-* attributes are needed
         if ( ! empty( $args['data'] ) ) {
             foreach ( $args['data'] as $dkey => $dvalue ) {
                 $html_out .= ' data-' . $dkey . '="' . $dvalue . '"';
             }
+        }
+
+        // required attributes if required is set true
+        if ( $args['required'] === true ) {
+            $html_out .= parent::get_aria_required( $args['required'] );
+
+            $html_out .= parent::get_required_attribute( $args['required'] );
         }
 
         // closing input element
@@ -195,11 +196,6 @@ class RadioBoxField extends SUWONForm
         // label element. Set input 'id' to 'for' attribute of label
         $args['label_args']['for'] = $args['id'];
         $html_out .= self::get_field_label( $args['label_args'] );
-
-        // if field is required
-		if ( $args['required'] ) {
-			$html_out .= parent::get_required_span();
-		}
 
 		if ( ! empty( $args['aftertext'] ) ) {
 			$html_out .= parent::get_hidden_text( $args['aftertext'] );

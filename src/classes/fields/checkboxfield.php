@@ -47,7 +47,7 @@ class CheckBoxField extends SUWONForm
             // start wrapper
             $html .= parent::get_html_block_start( array( 
                         'id'      			=> $options['name'] . '_checkboxes',
-                        'class'      		=> 'mb-3'
+                        'class'      		=> 'mb-3 checkbox-grp'
                     ) );
             
             // outputing title

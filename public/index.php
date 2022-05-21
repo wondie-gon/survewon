@@ -36,10 +36,40 @@ SUWONPage::left_progress_bar();
 								)
 							);
 							?>
+							<div class="msg-block"></div>
 							<div class="buttons">
 								<button class="nxt_step_btn">Next Step</button>
 							</div>
 						</div>
+
+						<!-- ............this is for test................................. -->
+						<div class="main">
+							<h3>School Enrollment</h3>
+							<?php
+							// m1_q17
+							echo CheckBoxField::get_fields_list(
+								array(
+									"name"    	   => "m1_q17",
+									"fields_title" => "What activity or activities did you or any of your household members participate or are currently participating in as part of PSNP implemented", 
+									"value_text_pairs"  => array(
+										"1" => "Animal treatment services (VACCINATION AND TREATMENT OF ANIMALS)",
+										"2" => "Agricultural/pastoral/fisheries' inputs and training",
+										"3" => "Distribution of Productive Inputs Distributed Directly at Household Level (Tools, Animals, Carts, Etc)",
+										"13" => "Improved access to clean water",
+										"14" => "Fodder production",
+										"-88" => "No participation",
+										"-99" => "Other (please specify)"
+									),
+								)
+							);
+							?>
+							<div class="buttons button_space">
+								<button class="prev_step_btn">Back</button>
+								<button class="nxt_step_btn">Next Step</button>
+							</div>
+						</div>
+						<!-- ...................this is for test............................ -->
+
 						<div class="main">
 							<h3>General Information</h3>
 							<?php
