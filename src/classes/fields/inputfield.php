@@ -14,9 +14,10 @@ class InputField extends SUWONForm
      * @return mixed/html an input field ready for print on browser
      */
     public static function get_field( $args = array() ) {
+		
         $defaults = array(
             'field_name'        => 'input',
-            'input_type'        => '',
+            'input_type'        => '', 
             'id'                => '',
             'name'              => '',
             'textvalue'         => '',
@@ -28,8 +29,8 @@ class InputField extends SUWONForm
             'placeholder'       => '',
             'wrap'              => true,
             'wrap_args'         => array(
-                'class'     =>  '',
-            ),
+				'class'			=> 'form-group mb-3'
+			),
         );
 
         $args = array_merge( $defaults, $args );
@@ -37,6 +38,29 @@ class InputField extends SUWONForm
         // returning field
         return self::get_input_field( $args );
     }
+
+	/**
+	 * Method to get class names for form group block based on 
+	 * input type and d_nne (display none) option
+	 * @param string $input_type type attribute of input field
+	 * @param boolean $d_none whether not to display the field
+	 * 				  Default is false, i.e. to be displayed
+	 * @return string class list of form group block
+	 */
+	public static function get_form_grp_classes( $input_type = '', $d_none = false, $initial_cls = 'form-group mb-3' ) {
+		// initiatng class
+		$cls_list = $initial_cls;
+		// add class from input type
+		if ( $input_type !== '' ) {
+			$cls_list .= ' form-grp-' . $input_type;
+		}
+
+		// to or not to display
+		if ( $d_none === true ) {
+			$cls_list .= ' hidden-fields';
+		}
+		return $cls_list;
+	}
 
     /**
 	 * Return input field with specified input type
@@ -69,6 +93,9 @@ class InputField extends SUWONForm
 				'maxlength' => '',
 				'onblur'    => '',
 				'multiple' => false,
+				'wrap_args'     	=> array(
+					'class'		=> '',
+				),
 			]
 		);
 		$args     = array_merge( $defaults, $args );

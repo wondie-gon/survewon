@@ -32,7 +32,7 @@ SUWONPage::left_progress_bar();
 									"value_text_pairs"  => array(
 										"1"	=>	"Yes",
 										"0"	=>	"No"
-									),
+									), 
 								)
 							);
 							?>
@@ -60,6 +60,50 @@ SUWONPage::left_progress_bar();
 										"-88" => "No participation",
 										"-99" => "Other (please specify)"
 									),
+									'last_activates_next'  => true,
+								)
+							);
+
+							// m1_q6
+							echo InputField::get_field(
+								array(
+									"input_type"        => "number",
+									"id"                => "m1_q6",
+									"name"              => "m1_q6",
+									"label_args"         => array( 
+										"for"   =>  "m1_q6",
+										"text"  =>  "Age of the head of household"
+									),
+									"class_list"        => "form-control",
+									"wrap"              => true,
+									"wrap_args"         => array(
+										"class"     =>  InputField::get_form_grp_classes( 'number', true ), // true to add clss d-none
+										"data_attrs"	=> array( 
+											"activatedby" => "m1_q17_99",
+										 )
+									),
+									"min" 	=> "15",
+									"max" => "120",
+								)
+							);
+
+							// m1_test
+							echo InputField::get_field(
+								array(
+									"input_type"        => "number",
+									"id"                => "m1_test",
+									"name"              => "m1_test",
+									"label_args"         => array( 
+										"for"   =>  "m1_test",
+										"text"  =>  "Number of children"
+									),
+									"class_list"        => "form-control",
+									"wrap"              => true,
+									"wrap_args"         => array(
+										"class"     =>  InputField::get_form_grp_classes( 'number' ),
+									),
+									"min" 	=> "15",
+									"max" => "120",
 								)
 							);
 							?>
@@ -104,7 +148,7 @@ SUWONPage::left_progress_bar();
 									"class_list"        => "form-control",
 									"wrap"              => true,
 									"wrap_args"         => array(
-										"class"     =>  "form-group mb-3",
+										"class"     =>  InputField::get_form_grp_classes( "text" ),
 									),
 								)
 							);
@@ -122,7 +166,7 @@ SUWONPage::left_progress_bar();
 									"class_list"        => "form-control",
 									"wrap"              => true,
 									"wrap_args"         => array(
-										"class"     =>  "form-group mb-3",
+										"class"     =>  InputField::get_form_grp_classes( "text" ),
 									),
 								)
 							);
@@ -139,7 +183,7 @@ SUWONPage::left_progress_bar();
 									"class_list"        => "form-control",
 									"wrap"              => true,
 									"wrap_args"         => array(
-										"class"     =>  "form-group mb-3",
+										"class"     =>  InputField::get_form_grp_classes( "text" ),
 									),
 								)
 							);
@@ -157,7 +201,7 @@ SUWONPage::left_progress_bar();
 									"class_list"        => "form-control",
 									"wrap"              => true,
 									"wrap_args"         => array(
-										"class"     =>  "form-group mb-3",
+										"class"     =>  InputField::get_form_grp_classes( "text" ),
 									),
 								)
 							);

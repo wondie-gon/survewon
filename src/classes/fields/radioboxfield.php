@@ -23,7 +23,8 @@ class RadioBoxField extends SUWONForm
             'info_text'         => '',
             'wrap'              => true,
             'is_inline'         => false,
-            'value_text_pairs'  => array(),
+            'value_text_pairs'  => array(), 
+            'last_activates_next'  => false,
         );
         // merged options
         $options = array_merge( $default_opts, $options );
@@ -45,10 +46,18 @@ class RadioBoxField extends SUWONForm
 
         if ( isset( $options['name'] ) && $opts_length >= 1 ) {
             // start wrapper
-            $html .= parent::get_html_block_start( array( 
+            if ( $options['last_activates_next'] ) {
+                $html .= parent::get_html_block_start( array( 
+                        'id'      			=> $options['name'] . '_radios',
+                        'class'      		=> 'mb-3 radiobox-grp unhide-next'
+                    ) );
+            } else {
+                $html .= parent::get_html_block_start( array( 
                         'id'      			=> $options['name'] . '_radios',
                         'class'      		=> 'mb-3 radiobox-grp'
                     ) );
+            }
+            
             
             // outputing title
             $html .= self::field_block_label( $title_args );
@@ -60,11 +69,22 @@ class RadioBoxField extends SUWONForm
             $keys_arr = array_keys( $options['value_text_pairs'] );
             // iterating input outputs
             foreach ( $keys_arr as $key ) {
+                /**
+                 * if last checkbox is neede to activate 
+                 * next hidden field when last option checked 
+                 * last field's class adds 'unhide-check'
+                 */
+                $field_class = "form-check-input";
+                if ( $options['last_activates_next'] && $key === $keys_arr[$opts_length - 1] ) {
+                    $field_class = "form-check-input unhide-check";
+                }
+
+                // args array for each input field
                 $new_arg = array(
                     'name'  => $options['name'], 
                     'id'    => $options['name'] . '_' . str_replace( "-", "", $key),
                     'value' =>  $key,
-                    'class_list'    => 'form-check-input',
+                    'class_list'    => $field_class,
                     'label_args'    => array(
                         'for'   =>  $options['name'] . '_' . str_replace( "-", "", $key),
                         'text'  =>  $options['value_text_pairs'][$key]

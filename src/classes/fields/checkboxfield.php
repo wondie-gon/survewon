@@ -24,6 +24,7 @@ class CheckBoxField extends SUWONForm
             'wrap'              => true,
             'is_inline'         => false,
             'value_text_pairs'  => array(),
+            'last_activates_next'  => false,
         );
         // merged options
         $options = array_merge( $default_opts, $options );
@@ -34,7 +35,7 @@ class CheckBoxField extends SUWONForm
             $wrapper_class = $options['is_inline'] ? 'form-check form-check-inline' : 'form-check';
         }
 
-        // length
+        // length or nmber of checkboxes
         $opts_length = count( $options['value_text_pairs'] );
 
         // field block title
@@ -45,10 +46,18 @@ class CheckBoxField extends SUWONForm
 
         if ( isset( $options['name'] ) && $opts_length >= 1 ) {
             // start wrapper
-            $html .= parent::get_html_block_start( array( 
+            if ( $options['last_activates_next'] ) {
+                $html .= parent::get_html_block_start( array( 
+                        'id'      			=> $options['name'] . '_checkboxes',
+                        'class'      		=> 'mb-3 checkbox-grp unhide-next'
+                    ) );
+            } else {
+                $html .= parent::get_html_block_start( array( 
                         'id'      			=> $options['name'] . '_checkboxes',
                         'class'      		=> 'mb-3 checkbox-grp'
                     ) );
+            }
+            
             
             // outputing title
             $html .= self::field_block_label( $title_args );
@@ -58,13 +67,30 @@ class CheckBoxField extends SUWONForm
             }
             // get keys to set new args for each input
             $keys_arr = array_keys( $options['value_text_pairs'] );
+            /**
+             * ---printing variable for internal use---
+             * $html .= print_r( $keys_arr, true ) . '<br />';
+             * $html .= $keys_arr[$opts_length - 1];
+             */
+
             // iterating input outputs
             foreach ( $keys_arr as $key ) {
+                /**
+                 * if last checkbox is neede to activate 
+                 * next hidden field when last option checked 
+                 * last field's class adds 'unhide-check'
+                 */
+                $field_class = "form-check-input";
+                if ( $options['last_activates_next'] && $key === $keys_arr[$opts_length - 1] ) {
+                    $field_class = "form-check-input unhide-check";
+                }
+
+                // args array for each input field
                 $new_arg = array(
                     'name'  => $options['name'], 
                     'id'    => $options['name'] . '_' . str_replace( "-", "", $key),
                     'value' =>  $key,
-                    'class_list'        => 'form-check-input',
+                    'class_list'        => $field_class,
                     'label_args'         => array(
                         'for'   =>  $options['name'] . '_' . str_replace( "-", "", $key),
                         'text'  =>  $options['value_text_pairs'][$key]
@@ -74,6 +100,7 @@ class CheckBoxField extends SUWONForm
                         'class'     =>  $wrapper_class,
                     )
                 );
+
                 // output html
                 $html .= self::get_checkbox_input( $new_arg );
             }
